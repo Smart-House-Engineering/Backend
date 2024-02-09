@@ -7,7 +7,7 @@ A repository containing the backend and server parts of a Software engineering p
 Clone the project
 
 ```bash
-  git clone https://github.com/Smart-House-Engineering/Backend.git
+  git clone git@github.com:Smart-House-Engineering/Backend.git
 ```
 
 Go to the project directory
