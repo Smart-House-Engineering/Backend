@@ -22,6 +22,9 @@ Install dependencies
   npm install
 ```
 
+Create .env file
+Add PORT=5000
+
 Start the server
 
 ```bash
