@@ -21,8 +21,9 @@
     "homepage": "https://github.com/Smart-House-Engineering/Backend#readme",
     "dependencies": {
         "cors": "^2.8.5",
-        "dotenv": "^16.4.1",
-        "express": "^4.18.2"
+        "dotenv": "^16.4.2",
+        "express": "^4.18.2",
+        "mongoose": "^8.1.1"
     },
     "devDependencies": {
         "nodemon": "^3.0.3",
