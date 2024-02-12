@@ -1,33 +1,33 @@
 {
-    "name": "backend",
-    "version": "1.0.0",
-    "description": "A repository containing the backend and server parts of a Software engineering project.",
-    "main": "index.js",
-    "scripts": {
-        "start": "nodemon src/server.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prettier": "prettier --write \"**/*.{js,jsx,json,md}\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Smart-House-Engineering/Backend.git"
-    },
-    "keywords": [],
-    "author": "Group 3",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Smart-House-Engineering/Backend/issues"
-    },
-    "homepage": "https://github.com/Smart-House-Engineering/Backend#readme",
-    "dependencies": {
-        "cors": "^2.8.5",
-        "dotenv": "^16.4.2",
-        "express": "^4.18.2",
-        "mongoose": "^8.1.1"
-    },
-    "devDependencies": {
-        "nodemon": "^3.0.3",
-        "prettier": "^3.2.5"
-    },
-    "type": "module"
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A repository containing the backend and server parts of a Software engineering project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write \"**/*.{js,jsx,json,md}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smart-House-Engineering/Backend.git"
+  },
+  "keywords": [],
+  "author": "Group 3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Smart-House-Engineering/Backend/issues"
+  },
+  "homepage": "https://github.com/Smart-House-Engineering/Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.2",
+    "express": "^4.18.2",
+    "mongoose": "^8.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.5"
+  },
+  "type": "module"
 }
