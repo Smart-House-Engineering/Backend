@@ -1,12 +1,11 @@
 import { Router } from "express"
-import { validatePassword } from "../middleware/validatePassword.js"
+import { validateInput } from "../middleware/validateInput.js"
+import { checkHomeId } from "../models/smartDevices.js"
 import {
   getUserByEmail,
   createUserAccount,
   getUserPasswordForLogin,
 } from "../models/homeUser.js"
-import { checkHomeId } from "../models/smartDevices.js"
-import EmailValidator from "email-validator"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import dotenv from "dotenv"
@@ -18,36 +17,15 @@ const aDay = 60 * 60 * 24
 const saltRounds = 10
 
 // register route for the OWNER
-route.post("/register", async function (req, res) {
+route.post("/register", validateInput, async function (req, res) {
   try {
     const { email, password, homeId } = req.body
-
-    if (!email || !password || !homeId) {
-      console.error("Invalid email, password, or homeId")
-      return res.status(400).json({
-        message: "Invalid email, password, or homeId",
-      })
-    }
 
     const homeIdExists = await checkHomeId(homeId)
     if (!homeIdExists) {
       console.error("HomeId does not exist")
       return res.status(400).json({
         message: "HomeId does not exist!",
-      })
-    }
-
-    const validatedEmail = EmailValidator.validate(email)
-    if (!validatedEmail) {
-      return res.status(400).json({
-        message: "Email is not valid!",
-      })
-    }
-
-    const validatedPassword = validatePassword(password)
-    if (!validatedPassword) {
-      return res.status(400).json({
-        message: "Password is not strong enough!",
       })
     }
 
@@ -84,36 +62,15 @@ route.post("/register", async function (req, res) {
 })
 
 // add an extra user
-route.post("/addUser", async function (req, res) {
+route.post("/addUser", validateInput, async function (req, res) {
   try {
     const { email, password, homeId } = req.body
-
-    if (!email || !password || !homeId) {
-      console.error("Invalid email, password, or homeId")
-      return res.status(400).json({
-        message: "Invalid email, password, or homeId",
-      })
-    }
 
     const homeIdExists = await checkHomeId(homeId)
     if (!homeIdExists) {
       console.error("HomeId does not exist")
       return res.status(400).json({
         message: "HomeId does not exist!",
-      })
-    }
-
-    const validatedEmail = EmailValidator.validate(email)
-    if (!validatedEmail) {
-      return res.status(400).json({
-        message: "Email is not valid!",
-      })
-    }
-
-    const validatedPassword = validatePassword(password)
-    if (!validatedPassword) {
-      return res.status(400).json({
-        message: "Password is not strong enough!",
       })
     }
 
