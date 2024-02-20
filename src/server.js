@@ -10,6 +10,7 @@ import { isHomeUser, isExternalUser } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
 import homeUserRoute from "./routes/user.js"
 import externalUserRoute from "./routes/external.js"
+import registerDeviceRoute from "./routes/device.js"
 
 const port = process.env.PORT || 5000
 
@@ -28,6 +29,7 @@ app.use("/auth", authRoute)
 app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 // external users, such as nurses, with less privileges
 app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
+app.use("/api/device", registerDeviceRoute)
 
 // Database and Server connection
 connectToDB()
