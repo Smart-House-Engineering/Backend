@@ -3,6 +3,7 @@ const app = express()
 import dotenv from "dotenv"
 dotenv.config()
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 import { connectToDB } from "./configs/db.js"
 import { isAuthenticated } from "./middleware/authentication.js"
@@ -15,6 +16,7 @@ import registerDeviceRoute from "./routes/device.js"
 const port = process.env.PORT || 5000
 
 // Middleware
+app.use(cors())
 app.use(
   express.urlencoded({
     extended: true,
