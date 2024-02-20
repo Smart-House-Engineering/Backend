@@ -9,8 +9,11 @@ export function isAuthenticated(req, res, next) {
   if (token) {
     try {
       const decodedToken = jwt.verify(token, secretKey)
-      req.user = { email: decodedToken.email }
-      console.log(req.user.email)
+      req.user = {
+        homeId: decodedToken.homeId,
+        email: decodedToken.email,
+        role: decodedToken.role,
+      }
       next()
     } catch (error) {
       console.error("Token verification error:", error)

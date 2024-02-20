@@ -1,6 +1,14 @@
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config()
+
+const secretKey = process.env.SECRET_KEY
+
 export function isHomeUser(req, res, next) {
-  const { email, role } = req.cookies.SmartHouseToken
-  if (!email || (role !== "OWNER" && role !== "TENANT")) {
+  const token = req.cookies.SmartHouseToken
+  const decodedToken = jwt.verify(token, secretKey)
+  console.log(decodedToken.user.role)
+  if (!decodedToken.user.email || decodedToken.user.role !== "OWNER") {
     return res.status(401).json({
       message: "Unauthorized",
     })
@@ -9,8 +17,9 @@ export function isHomeUser(req, res, next) {
 }
 
 export function isExternalUser(req, res, next) {
-  const { email, role } = req.cookies.SmartHouseToken
-  if (!email || role !== "EXTERNAL") {
+  const token = req.cookies.SmartHouseToken
+  const decodedToken = jwt.verify(token, secretKey)
+  if (!decodedToken.user.email || decodedToken.user.role !== "EXTERNAL") {
     return res.status(401).json({
       message: "Unauthorized",
     })
