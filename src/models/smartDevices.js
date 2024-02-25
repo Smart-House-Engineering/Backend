@@ -25,7 +25,7 @@ const SmartHome = mongoose.model("SmartHome", smartHomeSchema)
 
 async function checkHomeId(homeId) {
   try {
-    const existingSmartHome = await SmartDevice.findOne({ homeId })
+    const existingSmartHome = await SmartHome.findOne({ homeId })
     return !!existingSmartHome
   } catch (error) {
     console.error("Error checking homeId:", error)
