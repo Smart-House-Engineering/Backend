@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { SmartDevice } from "../models/smartDevices.js"
+import { SmartHome } from "../models/smartDevices.js"
 
 const route = Router()
 
@@ -7,7 +7,7 @@ route.post("/registerSmartHome", async function (req, res) {
   const { homeId } = req.body
 
   try {
-    const existingSmartHome = await SmartDevice.findOne({ homeId })
+    const existingSmartHome = await SmartHome.findOne({ homeId })
 
     if (existingSmartHome) {
       return res.status(400).json({ error: "SmartHome already exists" })

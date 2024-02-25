@@ -13,6 +13,8 @@ import homeUserRoute from "./routes/user.js"
 import externalUserRoute from "./routes/external.js"
 import registerDeviceRoute from "./routes/device.js"
 
+import smartHomeRoutes from "./routes/smartHomeRoutes.js"
+
 const port = process.env.PORT || 5000
 
 // Middleware
@@ -32,6 +34,8 @@ app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 // external users, such as nurses, with less privileges
 app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
 app.use("/api/device", registerDeviceRoute)
+
+app.use("/api/smartHome", smartHomeRoutes)
 
 // Database and Server connection
 connectToDB()

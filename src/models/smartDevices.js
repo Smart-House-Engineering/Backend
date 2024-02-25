@@ -1,22 +1,27 @@
 import mongoose from "mongoose"
 
-const smartDeviceSchema = new mongoose.Schema(
+const smartHomeSchema = new mongoose.Schema(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      auto: true,
-    },
     homeId: {
       type: String,
       required: true,
+      unique: true,
     },
-    devices: [], // or sensors
+    devices: {
+      lights: {
+        type: Boolean,
+        required: true,
+      },
+      fan: {
+        type: Boolean,
+        required: true,
+      },
+    },
   },
   { timestamps: true }
 )
 
-const SmartDevice = mongoose.model("SmartDevice", smartDeviceSchema)
+const SmartHome = mongoose.model("SmartHome", smartHomeSchema)
 
 async function checkHomeId(homeId) {
   try {
@@ -27,4 +32,4 @@ async function checkHomeId(homeId) {
   }
 }
 
-export { SmartDevice, checkHomeId }
+export { checkHomeId, SmartHome }
