@@ -11,10 +11,12 @@ const smartHomeSchema = new mongoose.Schema(
       lights: {
         type: Boolean,
         required: true,
+        default: false,
       },
       fan: {
         type: Boolean,
         required: true,
+        default: false,
       },
     },
   },

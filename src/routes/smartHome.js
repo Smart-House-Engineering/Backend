@@ -4,7 +4,7 @@ import { SmartHome } from "../models/smartDevices.js"
 const route = Router()
 
 route.post("/addHome", async (req, res) => {
-  const { homeId, devices } = req.body
+  const { homeId } = req.body
 
   // Check if homeId is provided
   if (!homeId) {
@@ -21,7 +21,7 @@ route.post("/addHome", async (req, res) => {
     }
 
     // Create a new smart home instance then save it
-    const newSmartHome = new SmartHome({ homeId, devices })
+    const newSmartHome = new SmartHome({ homeId })
     await newSmartHome.save()
 
     res.status(201).send(newSmartHome) // Send back the created smart home document
