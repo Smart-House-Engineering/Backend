@@ -34,4 +34,23 @@ async function checkHomeId(homeId) {
   }
 }
 
-export { checkHomeId, SmartHome }
+async function updateDevices(homeId, updatedDevices) {
+  try {
+    // Making sure the set adapts based on devices so they won't default to false
+    const updateObject = {}
+    for (const [key, value] of Object.entries(updatedDevices)) {
+      updateObject[`devices.${key}`] = value
+    }
+
+    const result = await SmartHome.findOneAndUpdate(
+      { homeId },
+      { $set: updateObject },
+      { new: true } // Return the updated document
+    )
+    return result
+  } catch (error) {
+    console.error("Error updating devices:", error)
+  }
+}
+
+export { updateDevices, checkHomeId, SmartHome }

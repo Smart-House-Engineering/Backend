@@ -12,6 +12,7 @@ import authRoute from "./routes/auth.js"
 import homeUserRoute from "./routes/user.js"
 import externalUserRoute from "./routes/external.js"
 import smartHomeRoutes from "./routes/smartHome.js"
+import modes from "./routes/modes.js"
 
 const port = process.env.PORT || 5000
 
@@ -33,7 +34,7 @@ app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
 
 app.use("/api/smartHome", smartHomeRoutes)
-
+app.use("/api/smartHome", modes)
 // Database and Server connection
 connectToDB()
 
