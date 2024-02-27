@@ -34,7 +34,7 @@ app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
 
 app.use("/api/smartHome", smartHomeRoutes)
-app.use("/api/smartHome", isAuthenticated, isHomeUser, modes)
+app.use("/api/modes", isAuthenticated, isHomeUser, modes)
 // Database and Server connection
 connectToDB()
 
