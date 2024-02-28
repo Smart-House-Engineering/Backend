@@ -4,7 +4,8 @@ import { updateDevices, getDevices } from "../models/smartDevices.js"
 const route = Router()
 
 route.put("/defaultMode", async (req, res) => {
-  const { homeId, updatedDevices } = req.body
+  const { updatedDevices } = req.body
+  const { homeId } = req.user
   console.log("Updating devices for homeId:", homeId, "with:", updatedDevices)
 
   try {
@@ -24,8 +25,9 @@ route.put("/defaultMode", async (req, res) => {
 })
 
 route.get("/defaultMode", async (req, res) => {
-  const { homeId } = req.body
+  const { homeId } = req.user
   console.log("Getting devices for homeId:", homeId)
+  console.log("Req", req.user)
 
   try {
     const devices = await getDevices(homeId)
