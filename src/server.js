@@ -32,9 +32,9 @@ app.use("/auth", authRoute)
 app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 // external users, such as nurses, with less privileges
 app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
-
-app.use("/api/smartHome", smartHomeRoutes)
 app.use("/api/modes", isAuthenticated, isHomeUser, modes)
+app.use("/api/smartHome", smartHomeRoutes)
+
 // Database and Server connection
 connectToDB()
 
