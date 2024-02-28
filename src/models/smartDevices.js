@@ -53,4 +53,17 @@ async function updateDevices(homeId, updatedDevices) {
   }
 }
 
-export { updateDevices, checkHomeId, SmartHome }
+async function getDevices(homeId) {
+  try {
+    const smartHome = await SmartHome.findOne({ homeId })
+    if (!smartHome) {
+      return null // If no home was found
+    }
+    return smartHome.devices
+  } catch (error) {
+    console.error("Error retrieving devices:", error)
+    throw error // Rethrow the error to handle it in the route
+  }
+}
+
+export { updateDevices, checkHomeId, getDevices, SmartHome }
