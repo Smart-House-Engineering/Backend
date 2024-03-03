@@ -120,13 +120,14 @@ route.post("/login", async function (req, res) {
     }
 
     const userPassword = await getUserPasswordForLogin(email)
-    const passwordVerfied = bcrypt.compare(password, userPassword)
+    const passwordVerfied = await bcrypt.compare(password, userPassword)
 
     if (!passwordVerfied) {
       return res.status(403).json({
         error: "Invalid login!",
       })
     }
+
     const token = jwt.sign({ user }, secretKey, { expiresIn: aDay })
 
     res.cookie("SmartHouseToken", token, {
