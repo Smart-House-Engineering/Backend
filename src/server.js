@@ -9,7 +9,7 @@ import { connectToDB } from "./configs/db.js"
 import { isAuthenticated } from "./middleware/authentication.js"
 import { isHomeUser } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
-import homeUserRoute from "./routes/user.js"
+import userRoute from "./routes/user.js"
 import smartHomeRoutes from "./routes/smartHome.js"
 import modes from "./routes/modes.js"
 
@@ -27,7 +27,7 @@ app.use(cookieParser())
 
 // Routes
 app.use("/auth", authRoute)
-app.use("/api/user", isAuthenticated, homeUserRoute)
+app.use("/api/user", isAuthenticated, userRoute)
 app.use("/api/modes", isAuthenticated, isHomeUser, modes)
 app.use("/api/smartHome", smartHomeRoutes)
 
