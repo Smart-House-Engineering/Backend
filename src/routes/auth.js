@@ -132,8 +132,8 @@ route.post("/login", async function (req, res) {
 
     res.cookie("SmartHouseToken", token, {
       httpOnly: true,
-      sameSite: "None",
       secure: true,
+      sameSite: "None",
     })
 
     return res.status(200).json({ message: "Login successful" })
