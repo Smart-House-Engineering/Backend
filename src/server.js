@@ -7,10 +7,9 @@ import cors from "cors"
 
 import { connectToDB } from "./configs/db.js"
 import { isAuthenticated } from "./middleware/authentication.js"
-import { isHomeUser, isExternalUser } from "./middleware/authorization.js"
+import { isHomeUser } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
 import homeUserRoute from "./routes/user.js"
-import externalUserRoute from "./routes/external.js"
 import smartHomeRoutes from "./routes/smartHome.js"
 import modes from "./routes/modes.js"
 
@@ -28,10 +27,7 @@ app.use(cookieParser())
 
 // Routes
 app.use("/auth", authRoute)
-// Owner and tenant, primary users at home
-app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
-// external users, such as nurses, with less privileges
-app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
+app.use("/api/user", isAuthenticated, homeUserRoute)
 app.use("/api/modes", isAuthenticated, isHomeUser, modes)
 app.use("/api/smartHome", smartHomeRoutes)
 
