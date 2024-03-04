@@ -6,6 +6,7 @@ const secretKey = process.env.SECRET_KEY
 
 export function isAuthenticated(req, res, next) {
   const token = req.cookies.SmartHouseToken
+  console.log(token)
   if (token) {
     try {
       const decodedToken = jwt.verify(token, secretKey)
