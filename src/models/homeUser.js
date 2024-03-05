@@ -20,13 +20,15 @@ const homeUserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["OWNER", "EXTERNAL"],
+    enum: ["OWNER", "TENANT", "EXTERNAL"],
     required: true,
   },
-  homeId: {
-    type: String,
-    required: true,
-  },
+  homeId: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 })
 
 const HomeUser = mongoose.model("homeUser", homeUserSchema)
@@ -56,4 +58,36 @@ async function getUserPasswordForLogin(email) {
   else return userPass.password
 }
 
-export { HomeUser, getUserByEmail, createUserAccount, getUserPasswordForLogin }
+async function checkIfHomeIdHasOwner(homeId) {
+  try {
+    const owner = await HomeUser.findOne({ homeId, role: "OWNER" })
+    return !!owner
+  } catch (error) {
+    console.error("Error checking if homeId has an owner:", error)
+    return false
+  }
+}
+
+async function addHomeIdToUserByEmail(email, homeId) {
+  try {
+    const user = await HomeUser.findOne({ email: email })
+    if (!user) {
+      console.error("User not found")
+      return null
+    }
+    user.homeId.push(homeId)
+    await user.save()
+    return user
+  } catch (error) {
+    console.error("Error adding homeId to user:", error)
+  }
+}
+
+export {
+  HomeUser,
+  getUserByEmail,
+  createUserAccount,
+  getUserPasswordForLogin,
+  checkIfHomeIdHasOwner,
+  addHomeIdToUserByEmail,
+}

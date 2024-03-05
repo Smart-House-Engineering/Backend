@@ -1,6 +1,6 @@
 export function isHomeUser(req, res, next) {
   const { email, role } = req.user
-  if (!email || role !== "OWNER") {
+  if (!email || (role !== "OWNER" && role !== "TENANT")) {
     return res.status(401).json({
       message: "Unauthorized",
     })

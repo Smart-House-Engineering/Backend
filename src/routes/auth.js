@@ -5,6 +5,7 @@ import {
   getUserByEmail,
   createUserAccount,
   getUserPasswordForLogin,
+  checkIfHomeIdHasOwner,
 } from "../models/homeUser.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
@@ -16,8 +17,8 @@ const secretKey = process.env.SECRET_KEY
 const aDay = 60 * 60 * 24
 const saltRounds = 10
 
-// register route for the OWNER
-route.post("/register", validateInput, async function (req, res) {
+// register route for the OWNER - one per homeId
+route.post("/registerOwner", validateInput, async function (req, res) {
   try {
     const { email, password, homeId } = req.body
 
@@ -26,6 +27,14 @@ route.post("/register", validateInput, async function (req, res) {
       console.error("HomeId does not exist")
       return res.status(400).json({
         message: "HomeId does not exist!",
+      })
+    }
+
+    const hasOwner = await checkIfHomeIdHasOwner(homeId)
+    if (hasOwner) {
+      console.error("HomeId already has an owner")
+      return res.status(400).json({
+        message: "HomeId already has an owner",
       })
     }
 
@@ -61,16 +70,31 @@ route.post("/register", validateInput, async function (req, res) {
   }
 })
 
-// add an extra user
-route.post("/addUser", validateInput, async function (req, res) {
+// add an extra user - TENANT or EXTERNAL
+route.post("/registerTenantExternal", validateInput, async function (req, res) {
   try {
-    const { email, password, homeId } = req.body
+    const { email, password, homeId, role } = req.body
+
+    if (!role || (role != "EXTERNAL" && role != "TENANT")) {
+      console.error("No user role provided")
+      return res.status(400).json({
+        message: "Invalid role! Required: TENANT or EXTERNAL",
+      })
+    }
 
     const homeIdExists = await checkHomeId(homeId)
     if (!homeIdExists) {
       console.error("HomeId does not exist")
       return res.status(400).json({
         message: "HomeId does not exist!",
+      })
+    }
+
+    const hasOwner = await checkIfHomeIdHasOwner(homeId)
+    if (!hasOwner) {
+      console.error("HomeId has no owner")
+      return res.status(400).json({
+        message: "HomeId has no owner",
       })
     }
 
@@ -84,13 +108,13 @@ route.post("/addUser", validateInput, async function (req, res) {
     const createdUser = await createUserAccount({
       email,
       password: hashedPassword,
-      role: "EXTERNAL",
+      role,
       homeId,
     })
 
     if (createdUser) {
       return res.status(200).json({
-        message: "External account created!",
+        message: role + " account created!",
       })
     } else {
       console.error(`Could not create account: ${error.message}`)
