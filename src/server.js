@@ -28,7 +28,11 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Routes
+// TODO: move register here + rename the route
+app.use("/api/smartHome", smartHomeRoutes)
+// TODO: leave only login & logout
 app.use("/auth", authRoute)
+
 app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
 app.use(
   "/api/homeUser",
@@ -38,8 +42,11 @@ app.use(
   homeUserRoute
 )
 app.use("/api/externalUser", isAuthenticated, externalUserRoute)
+
+// TODO: move to a more locical place
+// getDefault -> external (for everyone to get info)
+// updateDefault -> homeUser (for both owner and tenant can modify them)
 app.use("/api/modes", isAuthenticated, isHomeOwner, modes)
-app.use("/api/smartHome", smartHomeRoutes)
 
 // Database and Server connection
 connectToDB()
