@@ -18,6 +18,16 @@ export function isHomeTenant(req, res, next) {
   next()
 }
 
+export function isHomeUser(req, res, next) {
+  const { email, role } = req.user
+  if (!email || (role !== "TENANT" && role !== "OWNER")) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    })
+  }
+  next()
+}
+
 export function isExternalUser(req, res, next) {
   const { email, role } = req.user
   if (!email || role !== "EXTERNAL") {
