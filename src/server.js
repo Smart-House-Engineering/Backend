@@ -21,3 +21,5 @@ server.listen(app.get("port"), async () => {
     console.error(error)
   }
 })
+
+export default server

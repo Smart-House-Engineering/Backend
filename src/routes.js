@@ -10,15 +10,15 @@ import smartHomeRoutes from "./routes/smartHome.js"
 const routes = Router()
 
 // Routes
-app.use("/auth", authRoute)
+routes.use("/auth", authRoute)
 
 // only the owner
-app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
+routes.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
 // people living at the same place tenant and owner
-app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
+routes.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
 // all logged in user can access
-app.use("/api/modes", isAuthenticated, modes)
+routes.use("/api/modes", isAuthenticated, modes)
 // add home & register owner route for the "company"
-app.use("/api/smartHome", smartHomeRoutes)
+routes.use("/api/smartHome", smartHomeRoutes)
 
 export default routes
