@@ -1,46 +1,25 @@
-import express from "express"
-const app = express()
-import dotenv from "dotenv"
-dotenv.config()
-import cookieParser from "cookie-parser"
-import cors from "cors"
-
+import app from "./app.js"
+import http from "http"
+import { Server } from "socket.io"
+import { socketHandler } from "./socketHandler.js"
 import { connectToDB } from "./configs/db.js"
-import { isAuthenticated } from "./middleware/authentication.js"
-import { isHomeOwner, isHomeUser } from "./middleware/authorization.js"
-import authRoute from "./routes/auth.js"
-import homeOwnerRoute from "./routes/owner.js"
-import homeUserRoute from "./routes/homeUser.js"
-import modes from "./routes/modes.js"
-import smartHomeRoutes from "./routes/smartHome.js"
 
-const port = process.env.PORT || 5000
-
-// Middleware
-app.use(cors({ origin: true, credentials: true }))
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-)
-app.use(express.json())
-app.use(cookieParser())
-
-// Routes
-app.use("/auth", authRoute)
-
-// only the owner
-app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
-// people living at the same place tenant and owner
-app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
-// all logged in user can access
-app.use("/api/modes", isAuthenticated, modes)
-// add home & register owner route for the "company"
-app.use("/api/smartHome", smartHomeRoutes)
-
-// Database and Server connection
-connectToDB()
-
-app.listen(port, async () => {
-  console.log("Server listening on PORT " + port)
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 })
+
+server.listen(app.get("port"), async () => {
+  try {
+    await connectToDB()
+    socketHandler(io)
+    console.log(`Server is up on port ${app.get("port")}!`)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+export default server
