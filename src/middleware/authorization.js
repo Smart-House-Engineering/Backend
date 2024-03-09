@@ -1,6 +1,26 @@
-export function isHomeUser(req, res, next) {
+export function isHomeOwner(req, res, next) {
   const { email, role } = req.user
   if (!email || role !== "OWNER") {
+    return res.status(401).json({
+      message: "Unauthorized",
+    })
+  }
+  next()
+}
+
+export function isHomeTenant(req, res, next) {
+  const { email, role } = req.user
+  if (!email || role !== "TENANT") {
+    return res.status(401).json({
+      message: "Unauthorized",
+    })
+  }
+  next()
+}
+
+export function isHomeUser(req, res, next) {
+  const { email, role } = req.user
+  if (!email || (role !== "TENANT" && role !== "OWNER")) {
     return res.status(401).json({
       message: "Unauthorized",
     })

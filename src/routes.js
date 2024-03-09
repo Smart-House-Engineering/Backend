@@ -1,26 +1,24 @@
 import { Router } from "express"
 import { isAuthenticated } from "./middleware/authentication.js"
-import { isHomeUser, isExternalUser } from "./middleware/authorization.js"
+import { isHomeOwner, isHomeUser } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
-import homeUserRoute from "./routes/user.js"
-import externalUserRoute from "./routes/external.js"
-import smartHomeRoutes from "./routes/smartHome.js"
+import homeOwnerRoute from "./routes/owner.js"
+import homeUserRoute from "./routes/homeUser.js"
 import modes from "./routes/modes.js"
+import smartHomeRoutes from "./routes/smartHome.js"
 
 const routes = Router()
 
 // Routes
-routes.use("/auth", authRoute)
-// Owner and tenant, primary users at home
-routes.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
-// external users, such as nurses, with less privileges
-routes.use(
-  "/api/externalUser",
-  isAuthenticated,
-  isExternalUser,
-  externalUserRoute
-)
-routes.use("/api/modes", isAuthenticated, isHomeUser, modes)
-routes.use("/api/smartHome", smartHomeRoutes)
+app.use("/auth", authRoute)
+
+// only the owner
+app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
+// people living at the same place tenant and owner
+app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
+// all logged in user can access
+app.use("/api/modes", isAuthenticated, modes)
+// add home & register owner route for the "company"
+app.use("/api/smartHome", smartHomeRoutes)
 
 export default routes
