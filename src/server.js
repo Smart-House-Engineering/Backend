@@ -9,11 +9,10 @@ import { connectToDB } from "./configs/db.js"
 import { isAuthenticated } from "./middleware/authentication.js"
 import { isHomeOwner, isHomeTenant } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
-import smartHomeRoutes from "./routes/smartHome.js"
 import homeOwnerRoute from "./routes/owner.js"
 import homeUserRoute from "./routes/homeUser.js"
-import externalUserRoute from "./routes/external.js"
 import modes from "./routes/modes.js"
+import smartHomeRoutes from "./routes/smartHome.js"
 
 const port = process.env.PORT || 5000
 
@@ -28,12 +27,11 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Routes
-// TODO: move register here + rename the route
-app.use("/api/smartHome", smartHomeRoutes)
-// TODO: leave only login & logout
 app.use("/auth", authRoute)
 
+// only the owner
 app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
+// people living at the same place
 app.use(
   "/api/homeUser",
   isAuthenticated,
@@ -41,12 +39,10 @@ app.use(
   isHomeTenant,
   homeUserRoute
 )
-app.use("/api/externalUser", isAuthenticated, externalUserRoute)
-
-// TODO: move to a more locical place
-// getDefault -> external (for everyone to get info)
-// updateDefault -> homeUser (for both owner and tenant can modify them)
-app.use("/api/modes", isAuthenticated, isHomeOwner, modes)
+// all logged in user can access
+app.use("/api/modes", isAuthenticated, modes)
+// add home & register owner route for the "company"
+app.use("/api/smartHome", smartHomeRoutes)
 
 // Database and Server connection
 connectToDB()
