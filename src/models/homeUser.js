@@ -20,7 +20,7 @@ const homeUserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["OWNER", "EXTERNAL"],
+    enum: ["OWNER", "TENANT", "EXTERNAL"],
     required: true,
   },
   homeId: {
@@ -56,4 +56,20 @@ async function getUserPasswordForLogin(email) {
   else return userPass.password
 }
 
-export { HomeUser, getUserByEmail, createUserAccount, getUserPasswordForLogin }
+async function checkIfHomeIdHasOwner(homeId) {
+  try {
+    const owner = await HomeUser.findOne({ homeId, role: "OWNER" })
+    return !!owner
+  } catch (error) {
+    console.error("Error checking if homeId has an owner:", error)
+    return false
+  }
+}
+
+export {
+  HomeUser,
+  getUserByEmail,
+  createUserAccount,
+  getUserPasswordForLogin,
+  checkIfHomeIdHasOwner,
+}

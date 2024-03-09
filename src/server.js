@@ -7,11 +7,12 @@ import cors from "cors"
 
 import { connectToDB } from "./configs/db.js"
 import { isAuthenticated } from "./middleware/authentication.js"
-import { isHomeUser, isExternalUser } from "./middleware/authorization.js"
+import { isHomeOwner, isHomeTenant } from "./middleware/authorization.js"
 import authRoute from "./routes/auth.js"
-import homeUserRoute from "./routes/user.js"
-import externalUserRoute from "./routes/external.js"
 import smartHomeRoutes from "./routes/smartHome.js"
+import homeOwnerRoute from "./routes/owner.js"
+import homeUserRoute from "./routes/homeUser.js"
+import externalUserRoute from "./routes/external.js"
 import modes from "./routes/modes.js"
 
 const port = process.env.PORT || 5000
@@ -28,11 +29,16 @@ app.use(cookieParser())
 
 // Routes
 app.use("/auth", authRoute)
-// Owner and tenant, primary users at home
-app.use("/api/homeUser", isAuthenticated, isHomeUser, homeUserRoute)
-// external users, such as nurses, with less privileges
-app.use("/api/externalUser", isAuthenticated, isExternalUser, externalUserRoute)
-app.use("/api/modes", isAuthenticated, isHomeUser, modes)
+app.use("/api/owner", isAuthenticated, isHomeOwner, homeOwnerRoute)
+app.use(
+  "/api/homeUser",
+  isAuthenticated,
+  isHomeOwner,
+  isHomeTenant,
+  homeUserRoute
+)
+app.use("/api/externalUser", isAuthenticated, externalUserRoute)
+app.use("/api/modes", isAuthenticated, isHomeOwner, modes)
 app.use("/api/smartHome", smartHomeRoutes)
 
 // Database and Server connection
