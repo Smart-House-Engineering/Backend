@@ -1,3 +1,5 @@
+import dotenv from "dotenv"
+dotenv.config()
 import app from "./app.js"
 import http from "http"
 import { Server } from "socket.io"
@@ -12,12 +14,9 @@ const io = new Server(server, {
   },
 })
 
-server.listen(app.get("port"), async () => {
-  try {
-    await connectToDB()
-    socketHandler(io)
-    console.log(`Server is up on port ${app.get("port")}!`)
-  } catch (error) {
-    console.error(error)
-  }
+connectToDB()
+socketHandler(io)
+
+server.listen(app.get("port"), () => {
+  console.log(`Server is up on port ${app.get("port")}!`)
 })
