@@ -131,4 +131,4 @@ dist
 
 
 # Rest
-.rest
+*.rest
