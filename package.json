@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "server": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./src/tests/*.spec.js",
     "prettier": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "repository": {
@@ -32,6 +32,9 @@
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
+    "chai": "^5.1.0",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.3.0",
     "nodemon": "^3.0.3",
     "prettier": "^3.2.5"
   },
