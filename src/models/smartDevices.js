@@ -8,12 +8,77 @@ const smartHomeSchema = new mongoose.Schema(
       unique: true,
     },
     devices: {
-      lights: {
+      fan: {
         type: Boolean,
         required: true,
         default: false,
       },
-      fan: {
+      RFan: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      motion: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      buzzer: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      relay: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      servo1: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      servo2: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      yellowLed: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      gasSensor: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      photocell: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      soilSensor: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      steamSensor: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      whiteLed: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      button1: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      button2: {
         type: Boolean,
         required: true,
         default: false,
