@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const { MongoMemoryServer } = require("mongodb-memory-server")
 const request = require("supertest") // For making HTTP requests in tests
 import app from "../app"
-const { SmartHome } = require("../models/smartDevices") // Adjust the path to your model
+const { SmartHome } = require("../models/smartDevices")
 
 describe("POST /addHome", () => {
   let mongoServer
