@@ -33,12 +33,12 @@ const smartHomeSchema = new mongoose.Schema(
         required: true,
         default: false,
       },
-      servo1: {
+      door: {
         type: Number,
         required: true,
         default: 0,
       },
-      servo2: {
+      window: {
         type: Number,
         required: true,
         default: 0,
