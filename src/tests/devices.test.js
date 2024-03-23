@@ -37,8 +37,8 @@ describe("SmartHome devices", () => {
       motion: false,
       buzzer: false,
       relay: false,
-      servo1: 0,
-      servo2: 0,
+      door: 0,
+      window: 0,
       yellowLed: 0,
       gasSensor: 0,
       photocell: 0,
@@ -78,7 +78,7 @@ describe("SmartHome devices", () => {
     expect(devicesAfterUpdate.motion).toBe(false)
     expect(devicesAfterUpdate.buzzer).toBe(false)
     expect(devicesAfterUpdate.relay).toBe(false)
-    expect(devicesAfterUpdate.servo1).toBe(0)
+    expect(devicesAfterUpdate.door).toBe(0)
     expect(devicesAfterUpdate.soilSensor).toBe(0)
   })
 })
