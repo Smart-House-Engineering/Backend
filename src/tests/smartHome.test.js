@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
-const { MongoMemoryServer } = require("mongodb-memory-server")
-const request = require("supertest") // For making HTTP requests in tests
+import mongoose from "mongoose"
+import request from "supertest" // For making HTTP requests in tests
 import app from "../app"
-const { SmartHome } = require("../models/smartDevices")
+import { MongoMemoryServer } from "mongodb-memory-server"
+import { SmartHome } from "../models/smartDevices"
 
 describe("POST /addHome", () => {
   let mongoServer

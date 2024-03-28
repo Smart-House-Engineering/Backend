@@ -1,10 +1,6 @@
-const mongoose = require("mongoose")
-const { MongoMemoryServer } = require("mongodb-memory-server")
-const {
-  updateDevices,
-  getDevices,
-  SmartHome,
-} = require("../models/smartDevices")
+import mongoose from "mongoose"
+import { MongoMemoryServer } from "mongodb-memory-server"
+import { updateDevices, getDevices, SmartHome } from "../models/smartDevices"
 
 describe("SmartHome devices", () => {
   let mongoServer
